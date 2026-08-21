@@ -1,7 +1,8 @@
 import Cactus
 import farm_utils
 import Fields
-#import Maze
+
+# import Maze
 import Pumpkin
 import Sunflower
 import utils
@@ -33,13 +34,13 @@ while True:
         use_item(Items.Fertilizer)
     harvest()
 
+
 def main():
     harvest()
     utils.move_to((0, 0))
     selected_mode = 3
     selected_entity = Entities.Sunflower
     pet_the_piggy()
-    
 
     if modes[selected_mode] == "cactus":
         change_hat(Hats.Golden_Cactus_Hat)
