@@ -24,16 +24,6 @@ use_fertilizer = False
 modes = ["cactus", "dino", "maze", "pumpkin", "sunflower", "poly", "other"]
 change_hat(Hats.Golden_Cactus_Hat)
 
-while True:
-    plant(Entities.Pumpkin)
-    use_item(Items.Fertilizer)
-    while not can_harvest():
-        if get_entity_type() == Entities.Dead_Pumpkin:
-            harvest()
-            plant(Entities.Pumpkin)
-        use_item(Items.Fertilizer)
-    harvest()
-
 
 def main():
     harvest()
@@ -57,9 +47,7 @@ def main():
         Sunflower.start_sunflower(size, min_water_level)
     elif modes[selected_mode] == "pumpkin":
         change_hat(Hats.Pumpkin_Hat)
-        grid = Fields.field_tuple(size)
-        while True:
-            Pumpkin.start_pumpkin(size, grid)
+        Pumpkin.start_pumpkin(size)
     # elif modes[selected_mode] == "poly":
     #     while True:
     #         pass

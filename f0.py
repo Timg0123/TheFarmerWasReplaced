@@ -1,1 +1,0 @@
-leaderboard_run(Leaderboards.Maze, "Maze", 10000000000000000000000000000000000000)

@@ -1,25 +1,25 @@
+# TODO: implement A* path finding algorithm
+
 from __builtins__ import *
-import farm_utils
 import utils
 
 DIRECTIONS = [North, East, South, West]
 
 
-def turn_right(index):
+def turn_right(index: int):
     return (index + 1) % 4
 
 
-def turn_left(index):
+def turn_left(index: int):
     return (index - 1) % 4
 
 
-def regrow_maze(size):
+def regrow_maze(size: int):
     if can_harvest():
         harvest()
     plant(Entities.Bush)
     substance = size * 2 ** (num_unlocked(Unlocks.Mazes) - 1)
     use_item(Items.Weird_Substance, substance)
-
 
 def search_treasure(
     preffered_side: string, regrow=False, size=32
@@ -50,7 +50,7 @@ def search_treasure(
         do_a_flip()
 
 
-def distribute_drones(size):
+def distribute_drones():
     harvest()
     utils.move_to((0, 0))
     drones = []
@@ -64,11 +64,8 @@ def distribute_drones(size):
     search_treasure("left", True)
 
 
-distribute_drones(32)
-
-
-def start_maze(size):
-    pass
+def start_maze(size: int):
+    distribute_drones()
 
 
 start_maze(32)

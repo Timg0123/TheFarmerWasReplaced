@@ -1,8 +1,8 @@
+import farm_utils
 import utils
-# make everything for one row -> pass the row to start_pumpkin from main and wait on other drones before harvest
 
 
-def check_pumpkin():  # Returns True if Entity is Pumpkin
+def is_pumpkin():  # Returns True if Entity is Pumpkin
     if get_entity_type() != Entities.Pumpkin:
         harvest()
         plant(Entities.Pumpkin)
@@ -10,28 +10,25 @@ def check_pumpkin():  # Returns True if Entity is Pumpkin
         return True
 
 
-def replace_dead(size, grid):
-    dir = East
-    need_check = utils.copy(grid)
-    quick_print(need_check)
-
-    utils.move_to((0, 0))
-    for _ in range(2):
-        for _ in range(size):
-            for _ in range(size):
-                if check_pumpkin():
-                    need_check.remove((get_pos_x(), get_pos_y()))
-                dir = utils.move_to_next_tile(dir, size)
-
+def replace_dead(field):
+    need_check = field[:]
     while len(need_check) != 0:
-        for check in need_check:
-            utils.move_to((check))
-            if check_pumpkin():
-                need_check.remove(check)
+        for x in need_check:
+            utils.move_to((x, get_pos_y()))
+            if is_pumpkin():
+                need_check.remove(x)
 
 
-def start_pumpkin(size, grid):
-    # utils.replant_all(size, Entities.Pumpkin)
-    replace_dead(size, grid)
-    harvest()
-    utils.move_to((0, 0))
+def start_pumpkin(size):
+    farm_utils.for_all(
+        size, East, {farm_utils.check_till: Entities.Pumpkin, plant: Entities.Pumpkin}
+    )
+    field = []
+    for i in range(size):
+        field.append(i)
+
+    while True:
+        farm_utils.for_rows(size, East, {replace_dead: field})
+        utils.sleep(1)
+        harvest()
+        farm_utils.for_all(size, East, {plant: Entities.Pumpkin})
